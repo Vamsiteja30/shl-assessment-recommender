@@ -1,0 +1,30 @@
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+python-dotenv==1.0.1
+
+# LLM
+google-generativeai==0.8.3
+groq>=0.12.0
+
+# Embeddings & Vector Search
+sentence-transformers==3.3.1
+faiss-cpu==1.9.0
+numpy==1.26.4
+
+# Scraping
+requests==2.32.3
+beautifulsoup4==4.12.3
+
+# HTTP client (for tests)
+httpx==0.28.1
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+
+# Utilities
+tqdm==4.67.1
+
+# Frontend UI
+streamlit<1.40.0
