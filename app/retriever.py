@@ -1,8 +1,10 @@
 import logging
 import pickle
 import difflib
+import gc
 from pathlib import Path
 from typing import Any
+import torch
 
 import numpy as np
 import faiss
@@ -45,7 +47,11 @@ class Retriever:
             self.metadata: list[dict[str, Any]] = pickle.load(f)
 
         logger.info(f"Loading transformer model: {EMBED_MODEL}")
-        self.model = SentenceTransformer(EMBED_MODEL)
+        
+        # MEMORY OPTIMIZATION FOR RENDER (512MB RAM limit)
+        torch.set_num_threads(1)  # Stop PyTorch from spawning memory-hungry threads
+        self.model = SentenceTransformer(EMBED_MODEL, device='cpu')
+        gc.collect()  # Force cleanup immediately after loading
 
         # Quick lookups for validation and deduplication
         self._name_index = {item["name"].lower().strip(): item for item in self.metadata}
